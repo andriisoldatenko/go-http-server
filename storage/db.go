@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -14,18 +13,17 @@ var DB *gorm.DB
 
 // Opening a database and save the reference to `Database` struct.
 func Init() *gorm.DB {
-	db, err := gorm.Open("postgres", "host=localhost port=5432 user=gorm dbname=gorm password=mypassword")
+	db, err := gorm.Open("postgres", "host=localhost port=5432 user=film dbname=film password=film sslmode=disable")
 	if err != nil {
-		fmt.Println("db err: ", err)
+		panic(err)
 	}
 	db.DB().SetMaxIdleConns(10)
-	//db.LogMode(true)
+	db.LogMode(true)
 	DB = db
 	return DB
 }
 
 
-// Using this function to get a connection, you can create your connection pool here.
 func GetDB() *gorm.DB {
 	return DB
 }
